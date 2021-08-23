@@ -1,0 +1,22 @@
+{
+
+    "name": "budget-tracker-mt",
+    "short_name": "budget tracker",
+    "icons": [
+        {
+            "src": "",
+            "sizes": "",
+            "type": ""
+        },
+        {
+            "src": "",
+            "sizes": "",
+            "type": 
+        }
+    ],
+    "theme_color": "#fffffff",
+    "background_color": "#fffffff",
+    "start_url": "/",
+    "display": "standalone"
+
+}
