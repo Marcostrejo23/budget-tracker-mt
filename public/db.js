@@ -51,12 +51,12 @@ function checkDatabase() {
       .then(response => {        
         return response.json();
       })
-      // .then(() => {
-      //   // delete records if successful
-      //   const transaction = db.transaction(["pending"], "readwrite");
-      //   const store = transaction.objectStore("pending");
-      //   store.clear();
-      // });
+      .then(() => {
+        // delete records if successful
+        const transaction = db.transaction(["pending"], "readwrite");
+        const store = transaction.objectStore("pending");
+        store.clear();
+      });
     }
   };
 }
