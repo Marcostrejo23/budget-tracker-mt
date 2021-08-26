@@ -23,6 +23,21 @@ self.addEventListener("install", function(evt) {
     self.skipWaiting()
 });
 
+
+self.addEventListener("install", function(evt) {
+  evt.waitUntil(
+    caches.open(DATA_CACHE_NAME).then((cache) =>cache.add("/api/transaction"))
+  );
+  evt.waitUntil(
+    caches.open(CACHE_NAME).then(cache =>{
+      console.log("Files were successfully cached");
+      return cache.addAll(FILES_TO_CACHE);
+    })
+  );
+  self.skipWaiting();
+});
+
+
 self.addEventListener("fetch", function(evt) {
     if (evt.request.url.includes("/api/")) {
       evt.respondWith(
@@ -46,4 +61,19 @@ self.addEventListener("fetch", function(evt) {
         return response || fetch(evt.request);
       })
     );
+  });
+
+  self.addEventListener("activate", function (evt){
+    evt.waitUntil(caches.keys().then(keyList =>{
+      return Promise.all(
+        keyList.map(key=>{
+          if (key !==CACHE_NAME && key !== DATA_CACHE_NAME) {
+            console.log("Old cache data removed", key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+    );
+    self.clients.claim();
   });
